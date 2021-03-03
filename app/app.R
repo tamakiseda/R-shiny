@@ -7,10 +7,17 @@
 #    http://shiny.rstudio.com/
 #
 
+
+library(ggplot2)
 library(shiny)
 library(tidyverse)
+library(magrittr)
+library(gapminder)
+library(plotly)
+library(shinythemes)
 library(shinyjs)
-library(ggplot2)
+library(DT)
+library(leaflet)
 
 list_choices <-  unique(msleep$vore)[!is.na(unique(msleep$vore))]
 names(list_choices) <- paste(unique(msleep$vore)[!is.na(unique(msleep$vore))],"vore",sep="")
@@ -63,9 +70,15 @@ ui <- navbarPage("Shiny app",
                           ) # sidebarLayout
                  ), #  tabPanel
                  tabPanel("References",
+                          p(tags$button(class="btn btn-default", 
+                                        `data-toggle`="collapse", 
+                                        `data-target`="#hola",
+                                        "References")),
+                          div(class="collapse", id="collapseExample",
+                              div(class="card card-body",
                           includeMarkdown("references.Rmd")
-                 ) #  tabPanel
-) # navbarPage
+                 )) #  tabPanel
+)) # navbarPage
 
 col_scale <- scale_colour_discrete(limits = unique(msleep$vore))
 
